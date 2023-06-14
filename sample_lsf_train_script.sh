@@ -5,7 +5,7 @@
 #BSUB -N
 #BSUB -nnodes 4
 #BSUB -o ./joboutputs/joboutput.rcan_0.5M.%J
-#BSUB -q pbatch
+#BSUB -q pdebug
 #BSUB -W 0:30 
 
 
@@ -41,7 +41,7 @@ python train.py --rank_file=../$LSB_JOBID.address_port.csv \
 --data_path=../diverse_2K_with_extrap/ \
 --upscale=8 --timeit  --nepochs=1500 \
 --approx_param=0.5M --batch_size=4 \
---mode=pbatch --save_period=5 --case_name=$LSB_JOBNAME \
+--mode=pdebug --save_period=5 --case_name=$LSB_JOBNAME \
 --precision=16 --num_nodes=4 --model_type=rcan --seed=44   --max_time=00:11:58:00
 
 

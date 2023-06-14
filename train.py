@@ -76,7 +76,6 @@ num_nodes = args.num_nodes
 fast_dev_run = args.fast_dev_run
 profiler = args.profiler
 accumulate_grad_batches = args.accumulate_grad_batches
-first_channel = args.first_channel
 approx_param = args.approx_param
 log_gpu_memory = args.log_gpu_memory
 timeit = args.timeit
