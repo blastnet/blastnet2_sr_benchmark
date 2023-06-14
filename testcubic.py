@@ -68,10 +68,10 @@ if __name__ == '__main__':
     test_loader = torch.utils.data.DataLoader(test_ds,batch_size=batch_size,
                             shuffle=False,num_workers=num_workers,pin_memory=True)
 
-    forcedhit_ds = CubicDataset(forcedhit_dict,cubic_path,data_path,'forcedhit_dict',upscale,dx_min)
+    forcedhit_ds = CubicDataset(forcedhit_dict,cubic_path,data_path,'forcedhit',upscale,dx_min)
     forcedhit_loader = torch.utils.data.DataLoader(forcedhit_ds,batch_size=batch_size,
                             shuffle=False,num_workers=num_workers,pin_memory=True)
-    paramvar_ds = CubicDataset(paramvar_dict,cubic_path,data_path,'paramvar_dict',upscale,dx_min)
+    paramvar_ds = CubicDataset(paramvar_dict,cubic_path,data_path,'paramvar',upscale,dx_min)
     paramvar_loader = torch.utils.data.DataLoader(paramvar_ds,batch_size=batch_size,
                             shuffle=False,num_workers=num_workers,pin_memory=True)
 

@@ -13,7 +13,7 @@ sys.path.append('../')
 from common.functions import sgs,remove_edges,divergence,divergence_sgs_separate
 
 def get_cubicfile(idx,train_dict,cubic_path,data_path,mode,upscale):
-    hash_id = train_dict['hash_id'][idx]
+    hash_id = train_dict['hash'][idx]
     scalars = ['RHO_kgm-3_id','UX_ms-1_id','UY_ms-1_id','UZ_ms-1_id']
     #return a 4channel numpy array of the 4 scalars
     Yhat = []
@@ -26,13 +26,13 @@ def get_cubicfile(idx,train_dict,cubic_path,data_path,mode,upscale):
         ypath = data_path+'HR/'+mode+'/'+scalar+hash_id+'.dat'
         Y.append(np.memmap(ypath,dtype=np.float32).reshape(128,128,128))
     Y = np.stack(Y,axis=0)
-    dx = torch.tensor(np.float32(train_dict['dx'][idx]))
-    if train_dict['dy'][idx] != '':
-        dy = torch.tensor(np.float32(train_dict['dy'][idx]))
+    dx = torch.tensor(np.float32(train_dict['dx [m]'][idx]))
+    if train_dict['dy [m]'][idx] != '':
+        dy = torch.tensor(np.float32(train_dict['dy [m]'][idx]))
     else:
         dy = dx
-    if train_dict['dz'][idx] != '':
-        dz = torch.tensor(np.float32(train_dict['dz'][idx]))
+    if train_dict['dz [m]'][idx] != '':
+        dz = torch.tensor(np.float32(train_dict['dz [m]'][idx]))
     else:
         dz = dx
 
@@ -48,7 +48,7 @@ class CubicDataset(torch.utils.data.Dataset):
         self.dx_min = dx_min
         self.cubic_path = cubic_path
     def __len__(self):
-        return len(self.train_dict['hash_id'])
+        return len(self.train_dict['hash'])
 
     def __getitem__(self, idx):
         Yhat,Y,dx,dy,dz = get_cubicfile(idx,self.train_dict,self.cubic_path,self.path,self.mode,self.upscale)

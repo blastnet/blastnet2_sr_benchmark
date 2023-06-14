@@ -40,7 +40,7 @@ parser.add_argument("--gpu",type=int,default=1)
 parser.add_argument("--precision",type=int,default=32)
 parser.add_argument("--rank_file",type=str,default='../rank_file.txt')
 parser.add_argument("--case_name",type=str,default='tmp')
-parser.add_argument("--model_type", type=str, default='srresnet', help='srresnet | edsr | rcan')
+parser.add_argument("--model_type", type=str, default='rrdb', help='rrdb | edsr | rcan')
 parser.add_argument("--outpath", type=str, default='./eval/', help='output path')
 parser.add_argument("--test_data", type=str, default='all', help='all | forcedhit | paramvar | test')
 
@@ -124,7 +124,6 @@ if __name__ == '__main__':
 
     if model_type == 'rrdb':
         model = init_rrdb(approx_param=approx_param,upscale=upscale)
-        find_unused_parameters = False 
     elif model_type == 'rcan':
         model = init_rcan(approx_param=approx_param,upscale=upscale)
     elif model_type == 'edsr':
@@ -166,7 +165,11 @@ if __name__ == '__main__':
         model.load_state_dict(torch.load(case_name))
         litmodel = LitModel(model=model,mean=mean_list[i],std=std_list[i],learning_rate=None,loss_type=None)
         results = trainer.test(model=litmodel, dataloaders=dataloaders[i],ckpt_path=None)
-        filename = outpath + case_name+ckpt+'.'+loader_names[i]+'.json'
+        if 'grad' in case_name:
+            add_name = 'grad'
+        else:
+            add_name = '' 
+        filename = outpath+model_type+add_name+'_'+approx_param+'.'+loader_names[i]+'.json'
         with open(filename, 'w') as f:
             json.dump(results, f)
         

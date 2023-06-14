@@ -14,9 +14,11 @@ conda activate opence-1.7.2-cuda-11.4
 module unload cuda
 export LD_LIBRARY_PATH=/path/to/anaconda/envs/opence-1.7.2-cuda-11.4/lib:$LD_LIBRARY_PATH
 
-###WARNING change --datapath to your own path #########################
+#### Cubic files can be precomputed create_cubic_files.ipynb ########################
+##WARNING change --datapath and --cubicpath to your own path #########################
 python testcubic.py \
 --data_path=../diverse_2K_with_extrap/ \
+--cubic_path=../cubic/ \
 --upscale=8 --timeit \
 --batch_size=2  \
 --precision=32 --num_nodes=1 
