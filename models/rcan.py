@@ -1,4 +1,5 @@
 
+#written by W.T. Chung and B. Akoush
 #modified from https://github.com/yulunzhang/RCAN/tree/master/RCAN_TrainCode/code/model
 import torch.nn as nn
 import math

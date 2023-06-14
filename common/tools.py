@@ -1,3 +1,5 @@
+#written by W.T. Chung
+#util functions
 import os
 import numpy as np
 import pandas as pd
@@ -12,19 +14,6 @@ def get_metrics(log_path,metric):
     df = pd.read_csv(log_path)
     return df[['epoch',metric]].dropna()
 
-def plot_metrics(df_list,scale='linear',normalize=False):
-    plt.figure(figsize=(4,4))
-    if normalize:
-        for df in df_list:
-            plt.plot(df['epoch'],df[df.columns[1]]/df[df.columns[1]].max(),label=df.columns[1])
-    else:
-        for df in df_list:
-            plt.plot(df['epoch'],df[df.columns[1]],label=df.columns[1])
-    plt.yscale(scale)
-    #legend outside
-    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
-    plt.grid()
-    plt.show()
 
 def get_best_epoch(path,metric):
     #folders in path

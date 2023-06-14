@@ -1,4 +1,4 @@
-# %%
+# Written by W.T. Chung
 import os
 import torch
 import pytorch_lightning as pl
@@ -49,7 +49,7 @@ parser.add_argument("--precision",type=int,default=16)
 parser.add_argument("--rank_file",type=str,default='../rank_file.txt')
 parser.add_argument("--mode",type=str,default='pbatch')
 parser.add_argument("--case_name",type=str,default='tmp')
-parser.add_argument("--loss_type", type=str, default='mse')
+parser.add_argument("--loss_type", type=str, default='mse', help='mse | mse_grad')
 parser.add_argument("--model_type", type=str, default='rrdb', help='rrdb | edsr | rcan ')
 parser.add_argument("--grad_loss_weight", type=float, default=0.99)
 parser.add_argument("--lr_sched_factor",type=int,default=0.5,help='lr scheduler multiplier')
@@ -106,16 +106,19 @@ os.environ["LOCAL_RANK"] = str(world_rank%gpu)
 os.environ['MASTER_ADDR'] = master_addr
 print("WORLD_RANK: ",world_rank,", NODE_RANK: ",os.environ["NODE_RANK"],", LOCAL_RANK: ",os.environ["LOCAL_RANK"], ", WORLD_SIZE: ",os.environ["WORLD_SIZE"],
       ", MASTER_PORT: ",os.environ['MASTER_PORT'],", MASTER_ADDR: ",os.environ['MASTER_ADDR'])
-####### replace this block with your own multi-node multi-gpu training setup ###############
+####### replace this block with your own multi-node multi-gpu env setup ####################
 
 
 detect_anomaly = False
+
+#debug settings 
 if mode == 'pdebug':
     nepochs = save_period*2
     log_gpu_memory = True
     profiler = 'simple'
     detect_anomaly = True
 
+#define save dirs
 log_dir = './logs/'+mode+'/'+case_name
 checkpoint_dir = '../ckpt/'+mode+'/'+case_name+'/'
 
@@ -132,6 +135,8 @@ if __name__ == '__main__':
     else:
         raise ValueError('Please provide the correct train_meta file')
     
+
+    #DataLoader setup
     train_dict = data.my_read_csv(train_meta)
     val_dict = data.my_read_csv(val_meta)
     scale_transform = data.ScaleTransform(my_mean,my_std)
@@ -156,7 +161,7 @@ if __name__ == '__main__':
         print("Y shape: ",Y0.shape)
         print("Effective Batch size: ",batch_size*accumulate_grad_batches*num_nodes*gpu)
 
-
+    # Model setup 
     if model_type == 'rrdb':
         model = init_rrdb(approx_param=approx_param,upscale=upscale)
         find_unused_parameters = False 

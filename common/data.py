@@ -1,3 +1,5 @@
+#written by W.T. Chung
+#functions for loading and augmenting data
 import numpy as np
 import torch
 from .functions import divergence
@@ -41,7 +43,6 @@ def get_mean_std():
     return my_mean, my_std
 
 
-#load file based on path
 def get_file(idx,train_dict,data_path,mode,upscale):
     hash_id = train_dict['hash_id'][idx]
     scalars = ['RHO_kgm-3_id','UX_ms-1_id','UY_ms-1_id','UZ_ms-1_id']
@@ -102,6 +103,7 @@ def flip_3D(input,dims):
     input[swp[0]] = -input[swp[0]]
     return input
 
+#data augmentation
 def random_rot90_3D(X,Y,dx,dy,dz):
     dx_list = torch.tensor([dx,dy,dz]).reshape(3,1)
     k = np.random.randint(0,4)
@@ -111,6 +113,7 @@ def random_rot90_3D(X,Y,dx,dy,dz):
     dx,dy,dz = rot_dx(dx_list,k,axis)
     return X,Y,dx,dy,dz
 
+#data augmentation
 def random_flip_3D(X,Y):
     for axis in range(3):
         p = np.random.rand()

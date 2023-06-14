@@ -1,3 +1,5 @@
+#written by W.T. Chung
+#functions for flow physics problems
 import numpy as np # linear algebra
 import torch
 import torch.nn.functional as F

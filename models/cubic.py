@@ -1,3 +1,5 @@
+#written by W.T. Chung
+#dummy nn models for cubic interpolation
 import torch
 from torch import nn
 import numpy as np

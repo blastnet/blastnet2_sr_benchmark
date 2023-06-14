@@ -1,3 +1,5 @@
+#written by W.T. Chung
+
 import torch 
 
 def initialize_weights(m,activation,a,scale):

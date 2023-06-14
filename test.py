@@ -1,4 +1,4 @@
-# %%
+# Written by W.T. Chung
 import os
 import torch
 import pytorch_lightning as pl
@@ -184,9 +184,9 @@ if __name__ == '__main__':
     for ckpt in ckpts:
         for i in range(len(loader_names)):
             #todo correct this for pt files
-            model.load_state_dict(state_dict)
+            model.load_state_dict(torch.load(checkpoint_dir+ckpt))
             litmodel = LitModel(model=model,mean=mean_list[i],std=std_list[i],learning_rate=None,loss_type=None)
-            results = trainer.test(model=litmodel, dataloaders=dataloaders[i],ckpt_path=checkpoint_dir+ckpt)
+            results = trainer.test(model=litmodel, dataloaders=dataloaders[i],ckpt_path=None)
             filename = outpath + case_name+ckpt+'.'+loader_names[i]+'.json'
             with open(filename, 'w') as f:
                 json.dump(results, f)

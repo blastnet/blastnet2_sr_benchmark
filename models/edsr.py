@@ -1,3 +1,4 @@
+#written by W.T. Chung and B. Akoush
 #modified from https://github.com/sanghyun-son/EDSR-PyTorch
 from torch import nn
 from .rcan import Upsampler,default_conv

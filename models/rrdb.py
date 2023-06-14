@@ -1,3 +1,6 @@
+#written by W.T. Chung
+#modified from https://github.com/xinntao/ESRGAN/blob/master/RRDBNet_arch.py
+
 from torch import nn
 import torch 
 import math
@@ -58,7 +61,6 @@ class InterpolateLayer(nn.Module):
         return x
 
 class RRDBNet(nn.Module):
-    #modified from https://github.com/xinntao/ESRGAN/blob/master/RRDBNet_arch.py
     def __init__(self, in_nc, out_nc, nf, nb, gc=32, upscale=4):
         super(RRDBNet, self).__init__()
         RRDB_block_f = functools.partial(RRDB, nf=nf, gc=gc)

@@ -1,3 +1,5 @@
+#written by W.T. Chung
+#SSIM functions modified from https://github.com/jinh0park/pytorch-ssim-3D
 import torch
 import torch.nn.functional as F
 from torch import nn
@@ -44,7 +46,6 @@ def _ssim_3D(img1, img2, window, window_size, channel, size_average = True):
     
 
 class SSIM3D(torch.nn.Module):
-    #taken from https://github.com/jinh0park/pytorch-ssim-3D
     def __init__(self, window_size = 9, size_average = True):
         super(SSIM3D, self).__init__()
         self.window_size = window_size
