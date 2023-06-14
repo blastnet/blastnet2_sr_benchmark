@@ -87,26 +87,26 @@ if __name__ == '__main__':
         raise ValueError('Please provide the correct train_meta file')
     
     test_mean, test_std = data.get_mean_std_test()
-    extrapRe_mean, extrapRe_std = data.get_mean_std_extrapRe()
-    extrapffcm_mean, extrapffcm_std = data.get_mean_std_extrapffcm()
+    paramvar_mean, paramvar_std = data.get_mean_std_paramvar()
+    forcedhit_mean, forcedhit_std = data.get_mean_std_forcedhit()
 
     test_dict = data.my_read_csv(test_meta)
     forcedhit_dict = data.my_read_csv(forcedhit_meta)
     paramvar_dict = data.my_read_csv(paramvar_meta)
 
     test_scale_transform = data.ScaleTransform(test_mean,test_std)
-    extrapRe_scale_transform = data.ScaleTransform(extrapRe_mean,extrapRe_std)
-    extrapffcm_scale_transform = data.ScaleTransform(extrapffcm_mean,extrapffcm_std)
+    paramvar_scale_transform = data.ScaleTransform(paramvar_mean,paramvar_std)
+    forcedhit_scale_transform = data.ScaleTransform(forcedhit_mean,forcedhit_std)
     
 
     test_ds = data.MyDataset(test_dict,data_path,'test',upscale,test_scale_transform,test_scale_transform,dx_min)
     test_loader = torch.utils.data.DataLoader(test_ds,batch_size=batch_size,
                             shuffle=False,num_workers=num_workers,pin_memory=True)
     
-    forcedhit_ds = data.MyDataset(forcedhit_dict,data_path,'forcedhit',upscale,extrapffcm_scale_transform,extrapffcm_scale_transform,dx_min)
+    forcedhit_ds = data.MyDataset(forcedhit_dict,data_path,'forcedhit',upscale,forcedhit_scale_transform,forcedhit_scale_transform,dx_min)
     forcedhit_loader = torch.utils.data.DataLoader(forcedhit_ds,batch_size=batch_size,
                             shuffle=False,num_workers=num_workers,pin_memory=True)
-    paramvar_ds = data.MyDataset(paramvar_dict,data_path,'paramvar',upscale,extrapRe_scale_transform,extrapRe_scale_transform,dx_min)
+    paramvar_ds = data.MyDataset(paramvar_dict,data_path,'paramvar',upscale,paramvar_scale_transform,paramvar_scale_transform,dx_min)
     paramvar_loader = torch.utils.data.DataLoader(paramvar_ds,batch_size=batch_size,
                             shuffle=False,num_workers=num_workers,pin_memory=True)
     
@@ -149,8 +149,8 @@ if __name__ == '__main__':
     if test_data == 'all':
         loader_names = ['test','forcedhit','paramvar']
         dataloaders = [test_loader,forcedhit_loader,paramvar_loader]
-        mean_list = [test_mean,extrapffcm_mean,extrapRe_mean]
-        std_list = [test_std,extrapffcm_std,extrapRe_std]
+        mean_list = [test_mean,forcedhit_mean,paramvar_mean]
+        std_list = [test_std,forcedhit_std,paramvar_std]
     else:
         loader_names = [test_data]
         if test_data == 'test':

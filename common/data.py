@@ -32,14 +32,14 @@ def get_mean_std_test():
 
     return my_mean, my_std
 
-def get_mean_std_extrapRe():
+def get_mean_std_paramvar():
     #evaluated thorugh mean of train data in rho and (u,v,w lumped together)
     my_mean = torch.tensor([0.23,34.0, 34.0, 34.0])
     my_std = torch.tensor([0.059,55.0, 55.0, 55.0])
 
     return my_mean, my_std
 
-def get_mean_std_extrapffcm():
+def get_mean_std_forcedhit():
     #evaluated thorugh mean of train data in rho and (u,v,w lumped together)
     my_mean = torch.tensor([11,-0.051, -0.051, -0.051])
     my_std = torch.tensor([4.6,1.4, 1.4, 1.4])
