@@ -4,6 +4,17 @@ import numpy as np
 import torch
 from .functions import divergence
 import csv
+from scipy.ndimage import uniform_filter
+
+
+def my_box_filter(phi,fw):
+    filtered = uniform_filter(phi,size=fw)
+    return filtered[fw//2::fw,fw//2::fw,fw//2::fw]
+
+# for favre filtering to create features
+def my_favre_filter(phi,rho,fw):
+    return my_box_filter(rho*phi,fw)/my_box_filter(rho,fw)
+
 
 def my_read_csv(path):
     with open(path, 'r') as file:
