@@ -12,5 +12,5 @@ Brief rundown on code:
 3. **create_cubic_files.ipynb** precomputes cubic interpolation on files for a baseline comparison.
 4. **find_addport.py** finds master port for multinode training.
 5. **sample_lsf_{train,test,testcubic}.sh** are batch submission scripts for IBM LSF (not Slurm).
-6. **{train,test,testcubic.py}** perform multinode training, and single-node evaluations for ML and cubic interpolation, respectively.
+6. **{train,test,testcubic}.py** perform multinode training, and single-node evaluations for ML and cubic interpolation, respectively.
 7. **requirements.txt** provides recommended packages to run this code
