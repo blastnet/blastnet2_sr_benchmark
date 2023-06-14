@@ -71,11 +71,9 @@ rank_file = args.rank_file
 case_name = args.case_name
 model_type = args.model_type
 outpath = args.outpath
-disc_feat = args.disc_feat
 test_data = args.test_data
 #  must be set before main block
 
-checkpoint_dir = '../ckpt/pbatch/'+case_name+'/'
 log_dir = './logs/pbatch/'+case_name+'/csv_logs/'
 
 if __name__ == '__main__':
@@ -83,7 +81,7 @@ if __name__ == '__main__':
     pl.seed_everything(seed)
 
     # %%
-    if train_meta == './metadata/train_data_summary_neurips.csv':
+    if train_meta == './metadata/train_data_summary.csv':
         dx_min = 3.906250185536919e-06
     else:
         raise ValueError('Please provide the correct train_meta file')
@@ -162,34 +160,15 @@ if __name__ == '__main__':
             dataloaders = [paramvar_loader]
         elif test_data == 'forcedhit': 
             dataloader = [forcedhit_loader]     
-    val_metrics = ['val_mseloss']
-    best_epochs = []
-    for metric in val_metrics:
-        best_epoch = tools.get_best_epoch(log_dir,metric)
-        #if best epoch is not in best_epochs, add it
-        if best_epoch not in best_epochs:
-            best_epochs.append(int(best_epoch))
-    print("Best epochs: ",best_epochs) 
-    ckpts = []
-    for best_epoch in best_epochs:
-        for ckpt in os.listdir(checkpoint_dir):
-            import re
-            match = re.search(r'epoch=(\d+)', ckpt)
-            if match:
-                epoch = int(match.group(1)) 
-                if epoch == best_epoch:
-                    ckpts.append(ckpt)
-                    break #only add one ckpt per best epoch
-    print("Best checkpoints: ", ckpts)
-    for ckpt in ckpts:
-        for i in range(len(loader_names)):
-            #todo correct this for pt files
-            model.load_state_dict(torch.load(checkpoint_dir+ckpt))
-            litmodel = LitModel(model=model,mean=mean_list[i],std=std_list[i],learning_rate=None,loss_type=None)
-            results = trainer.test(model=litmodel, dataloaders=dataloaders[i],ckpt_path=None)
-            filename = outpath + case_name+ckpt+'.'+loader_names[i]+'.json'
-            with open(filename, 'w') as f:
-                json.dump(results, f)
+    
+    for i in range(len(loader_names)):
+        #todo correct this for pt files
+        model.load_state_dict(torch.load(case_name))
+        litmodel = LitModel(model=model,mean=mean_list[i],std=std_list[i],learning_rate=None,loss_type=None)
+        results = trainer.test(model=litmodel, dataloaders=dataloaders[i],ckpt_path=None)
+        filename = outpath + case_name+ckpt+'.'+loader_names[i]+'.json'
+        with open(filename, 'w') as f:
+            json.dump(results, f)
         
     if timeit:
         end_time = time.time()

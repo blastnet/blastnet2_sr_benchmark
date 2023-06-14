@@ -55,7 +55,7 @@ def get_mean_std():
 
 
 def get_file(idx,train_dict,data_path,mode,upscale):
-    hash_id = train_dict['hash_id'][idx]
+    hash_id = train_dict['hash'][idx]
     scalars = ['RHO_kgm-3_id','UX_ms-1_id','UY_ms-1_id','UZ_ms-1_id']
     #return a 4channel numpy array of the 4 scalars
     X = []
@@ -68,13 +68,13 @@ def get_file(idx,train_dict,data_path,mode,upscale):
         ypath = data_path+'HR/'+mode+'/'+scalar+hash_id+'.dat'
         Y.append(np.memmap(ypath,dtype=np.float32).reshape(128,128,128))
     Y = np.stack(Y,axis=0)
-    dx = torch.tensor(np.float32(train_dict['dx'][idx]))
-    if train_dict['dy'][idx] != '':
-        dy = torch.tensor(np.float32(train_dict['dy'][idx]))
+    dx = torch.tensor(np.float32(train_dict['dx [m]'][idx]))
+    if train_dict['dy [m]'][idx] != '':
+        dy = torch.tensor(np.float32(train_dict['dy [m]'][idx]))
     else:
         dy = dx
-    if train_dict['dz'][idx] != '':
-        dz = torch.tensor(np.float32(train_dict['dz'][idx]))
+    if train_dict['dz [m]'][idx] != '':
+        dz = torch.tensor(np.float32(train_dict['dz [m]'][idx]))
     else:
         dz = dx
 
@@ -189,7 +189,7 @@ class MyDataset(torch.utils.data.Dataset):
         self.upscale = upscale
         self.dx_min = dx_min
     def __len__(self):
-        return len(self.train_dict['hash_id'])
+        return len(self.train_dict['hash'])
 
     def __getitem__(self, idx):
         X,Y,dx,dy,dz = get_file(idx,self.train_dict,self.path,self.mode,self.upscale)

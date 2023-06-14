@@ -4,8 +4,8 @@
 #BSUB -J rcan_0.5M
 #BSUB -N
 #BSUB -nnodes 1
-#BSUB -o ./joboutputs/joboutput.test_rcan_1b_8x.%J
-#BSUB -q pbatch
+#BSUB -o ./joboutputs/joboutput.test_rcan_0.5M.%J
+#BSUB -q pdebug
 #BSUB -W 0:30 
 
 
@@ -20,7 +20,7 @@ export LD_LIBRARY_PATH=/path/to/anaconda/envs/opence-1.7.2-cuda-11.4/lib:$LD_LIB
 python test.py --rank_file=../$LSB_JOBID.address_port.csv \
 --data_path=../diverse_2K_with_extrap/ \
 --upscale=8 --timeit \
---approx_param=0.5M --case_name=$LSB_JOBNAME \
+--approx_param=0.5M --case_name=./weights/seed42/rcan_approx0.5M_8xSR.pt \
 --precision=32 --num_nodes=1 --model_type=rcan
 
 
