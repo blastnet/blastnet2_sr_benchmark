@@ -1,9 +1,7 @@
 # Written by W.T. Chung
-import os
 import torch
 import pytorch_lightning as pl
 import time
-import numpy as np
 # import matplotlib.pyplot as plt
 import multiprocessing
 import  json

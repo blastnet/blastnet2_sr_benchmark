@@ -1,11 +1,9 @@
 # Written by W.T. Chung
-import os
 import torch
 import pytorch_lightning as pl
 import time
 import multiprocessing
 import  json
-from common import tools
 print("CPU count:", multiprocessing.cpu_count())
 
 
