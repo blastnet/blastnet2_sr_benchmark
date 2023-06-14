@@ -5,7 +5,7 @@
 #BSUB -N
 #BSUB -nnodes 1
 #BSUB -o ./joboutputs/joboutput.test_cubic_8x.%J
-#BSUB -q pbatch
+#BSUB -q pdebug
 #BSUB -W 0:30 
 
 
