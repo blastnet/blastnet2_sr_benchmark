@@ -10,7 +10,7 @@ To install requirements:
 pip install -r requirements.txt
 ```
 
-This code works with Python 3.9.  
+This code works with Python 3.9. We used conda to manage environments in the work. 
 
 ## Data
 
@@ -33,7 +33,7 @@ To train the models, we provide a **sample_lsf_train.sh** that provides multi-no
 
 ## Evaluation
 
-To eval the models, we provide a **sample_lsf_test.sh** that provides single-gpu evaluation via a batch submission on IBM LSF (not SLURM). Essentially it does::
+To eval the models, we provide a **sample_lsf_test.sh** that provides single-gpu evaluation via a batch submission on IBM LSF (not SLURM). Essentially it does:
 
 ```eval
 
