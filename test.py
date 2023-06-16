@@ -36,7 +36,6 @@ parser.add_argument("--approx_param", type=str, default='0.5M')
 parser.add_argument("--timeit", action='store_true')
 parser.add_argument("--gpu",type=int,default=1)
 parser.add_argument("--precision",type=int,default=32)
-parser.add_argument("--rank_file",type=str,default='../rank_file.txt')
 parser.add_argument("--case_name",type=str,default='tmp')
 parser.add_argument("--model_type", type=str, default='rrdb', help='rrdb | edsr | rcan')
 parser.add_argument("--outpath", type=str, default='./eval/', help='output path')
@@ -65,7 +64,6 @@ approx_param = args.approx_param
 timeit = args.timeit
 gpu = args.gpu
 precision = args.precision
-rank_file = args.rank_file
 case_name = args.case_name
 model_type = args.model_type
 outpath = args.outpath
