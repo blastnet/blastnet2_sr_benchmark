@@ -60,3 +60,6 @@ python testcubic.py \
 
 We also provided pre-trained weights in the same [Kaggle](https://www.kaggle.com/datasets/waitongchung/blastnet-momentum-3d-sr-dataset) repo. A sample is provided in the **weights** folder.
 
+## Inference 
+
+You can learn how to plot the features and labels, and perform inference with the pre-trained weights in this [Kaggle notebook](https://www.kaggle.com/code/waitongchung/momentum128-readandinfer)!
