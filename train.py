@@ -15,6 +15,7 @@ from models.litmodel import LitModel
 from models.rrdb import init_rrdb
 from models.rcan import init_rcan
 from models.edsr import init_edsr
+from models.convfno import init_convfno
 
 from common import data
 
@@ -168,6 +169,8 @@ if __name__ == '__main__':
         model = init_rcan(approx_param=approx_param,upscale=upscale)
     elif model_type == 'edsr':
         model = init_edsr(approx_param=approx_param,upscale=upscale)
+    elif model_type == 'convfno':
+        model = init_convfno(approx_param=approx_param,upscale=upscale)
     else:
         raise ValueError('Please provide the correct model_type')
     
